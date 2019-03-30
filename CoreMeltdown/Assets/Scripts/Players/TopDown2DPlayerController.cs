@@ -55,9 +55,7 @@ namespace Assets.Scripts.Players
         private void UpdateMovementAnimation()
         {
             const float movementThreshold = 0.001f;
-
-            //_animator.SetInteger(nameof(PlayerMovement), (int) PlayerMovement.NotMoving);
-
+            
             if (_movement.y > movementThreshold)
             {
                 _animator.SetInteger(nameof(PlayerMovement), (int) PlayerMovement.MovingUp);
@@ -80,11 +78,6 @@ namespace Assets.Scripts.Players
         void FixedUpdate()
         {
             _rigidBody2D.AddForce(_movement);
-
-            //Vector3 movement = new Vector3(_horizontalInput, _verticalInput, 0f).normalized;
-            //Vector3 acceleration = movement * frameSpeed * Time.deltaTime;
-            //Vector3 newPos = gameObject.transform.position + acceleration;
-            //rigidbody2d.MovePosition(newPos);
         }
     }
 }
