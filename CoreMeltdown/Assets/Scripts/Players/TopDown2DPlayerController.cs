@@ -48,10 +48,33 @@ namespace Assets.Scripts.Players
 
             _movement = new Vector2(horizontalInput * speed, verticalInput * speed);
 
-            //if (movement.y > 0.01f)
-            //{
-            //    _animator.SetBool("moveUp", true);
-            //}
+            UpdateMovementAnimation();
+            
+        }
+
+        private void UpdateMovementAnimation()
+        {
+            const float movementThreshold = 0.001f;
+
+            //_animator.SetInteger(nameof(PlayerMovement), (int) PlayerMovement.NotMoving);
+
+            if (_movement.y > movementThreshold)
+            {
+                _animator.SetInteger(nameof(PlayerMovement), (int) PlayerMovement.MovingUp);
+            }
+            else if (_movement.y < -movementThreshold)
+            {
+                _animator.SetInteger(nameof(PlayerMovement), (int)PlayerMovement.MovingDown);
+            }
+
+            if (_movement.x > movementThreshold)
+            {
+                _animator.SetInteger(nameof(PlayerMovement), (int)PlayerMovement.MovingRight);
+            }
+            else if (_movement.x < -movementThreshold)
+            {
+                _animator.SetInteger(nameof(PlayerMovement), (int)PlayerMovement.MovingLeft);
+            }
         }
 
         void FixedUpdate()

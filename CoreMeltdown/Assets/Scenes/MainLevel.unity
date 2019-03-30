@@ -416,7 +416,7 @@ Transform:
   m_GameObject: {fileID: 1091764845}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 11.66}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 1830858226}
   m_RootOrder: 1
@@ -434,8 +434,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIdentifier: 
-  speed: 100000
-  drag: 10000
+  speed: 1000
+  drag: 500
 --- !u!95 &1091764851
 Animator:
   serializedVersion: 3
@@ -446,7 +446,7 @@ Animator:
   m_GameObject: {fileID: 1091764845}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ee1405c35a056814daf6e4c376f41a5b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
