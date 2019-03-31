@@ -7,8 +7,9 @@ namespace Assets.Scripts.HUDs
 {
     public class HeadUpDisplayManager : MonoBehaviour
     {
-        public Text radiationLevel;
+        public Text healthLevel;
         public Text shieldLevel;
+        public Text radiationLevel;
 
         public Color danger;
 
@@ -25,21 +26,18 @@ namespace Assets.Scripts.HUDs
 
                 float healthRate = 100f * player.Health / Player.MaxHealth;
                 
-                //float radiationRate = 100f - 
-                //if (radiationRate > 90)
-                //{
-                //    radiationLevel.color = danger;
-                //}
-
-                radiationLevel.text = healthRate.ToString("##0") + "%";
-
-                
+                healthLevel.text = healthRate.ToString("##0") + "%";
             }
         }
 
         public void AddPlayer(Player player)
         {
             _players.Add(player);
+        }
+
+        public void SetRadiationLevel(float radiation)
+        {
+            radiationLevel.text = radiation.ToString("0.0");
         }
     }
 }

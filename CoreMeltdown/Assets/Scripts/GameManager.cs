@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.ControlRooms;
 using Assets.Scripts.HUDs;
 using Assets.Scripts.Players;
 using UnityEngine;
@@ -10,7 +11,8 @@ namespace Assets.Scripts
     public class GameManager : MonoBehaviour
     {
         public TopDown2DPlayerController[] playerControllers;
-        public HeadUpDisplayManager HeadUpDisplayManager;
+        public HeadUpDisplayManager headUpDisplayManager;
+        public NuclearCore nuclearCore;
 
         private readonly string[] _playerNames = new[] {"Alice", "Bob"};
 
@@ -39,7 +41,7 @@ namespace Assets.Scripts
                 _players.Add(player, controller);
                 _alivePlayers.Add(player);
 
-                HeadUpDisplayManager.AddPlayer(player);
+                headUpDisplayManager.AddPlayer(player);
             }
         }
         
@@ -69,14 +71,19 @@ namespace Assets.Scripts
 
         void Update()
         {
+            // debug    
             if (Input.GetKey(KeyCode.R))
             {
                 Debug.LogWarning("Inflicting damage");
                 _alivePlayers.First().InflictRadiation(25 * Time.deltaTime);
             }
 
+            headUpDisplayManager.SetRadiationLevel(nuclearCore.RadiationsPerSecond);
+
             foreach (var alivePlayer in _alivePlayers.ToList())
             {
+                alivePlayer.InflictRadiation(nuclearCore.RadiationsPerSecond * Time.deltaTime);
+
                 if (alivePlayer.IsRadiationPoisoned)
                 {
                     KillPlayer(alivePlayer);
