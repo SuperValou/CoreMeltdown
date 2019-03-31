@@ -10,10 +10,7 @@ namespace Assets.Scripts.ControlRooms
     {
         public ControlPanel[] controlPanels;
 
-        public float radioactivityPerPanel = 1;
         public float failureProbabilityPerSecond = 0.5f; // chance of a control panel to fail at each second
-
-        public float failureProbabilityAcceleration = 1;
 
         private readonly Stopwatch _stopwatch = new Stopwatch();
         private readonly Random _random = new Random();
@@ -27,8 +24,6 @@ namespace Assets.Scripts.ControlRooms
 
         void Update()
         {
-            float factor = 1f - 1f / (1 + (float) _stopwatch.Elapsed.TotalSeconds);
-
             float failureProbability = Time.deltaTime * failureProbabilityPerSecond;
             failureProbability = Mathf.Clamp(failureProbability, 0, 1);
 
@@ -36,11 +31,10 @@ namespace Assets.Scripts.ControlRooms
             {
                 CreateFailure();
             }
-
-            var failingPanels = controlPanels.Count(p => p.IsTurnedOn);
-            RadiationsPerSecond = failingPanels * radioactivityPerPanel;
+            
+            RadiationsPerSecond = controlPanels.Sum(panel => panel.GetRadioactivity());
         }
-
+        
         private void CreateFailure()
         {
             var faultingPanelIndex = _random.Next(controlPanels.Length);

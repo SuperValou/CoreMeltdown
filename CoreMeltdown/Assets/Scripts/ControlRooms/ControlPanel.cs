@@ -7,18 +7,16 @@ namespace Assets.Scripts.ControlRooms
 {
     public class ControlPanel : MonoBehaviour
     {
+        public float radioactiveAcceleration = 1;
+        public float radioactiveIntensity = 1;
+        
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
     
         public bool IsTurnedOn { get; private set; }
-
-        public float RunningTime
-        {
-            get { return (float) _stopwatch.Elapsed.TotalMilliseconds; }
-        }
-
+        
         void Start()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -78,6 +76,18 @@ namespace Assets.Scripts.ControlRooms
         void OnDestroy()
         {
             _stopwatch.Stop();
+        }
+
+        public float GetRadioactivity()
+        {
+            if (!IsTurnedOn)
+            {
+                return 0;
+            }
+            
+            float factor = (float) _stopwatch.Elapsed.TotalMilliseconds / 1000 * radioactiveAcceleration;
+            float radioactivity = radioactiveIntensity * factor;
+            return radioactivity;
         }
     }
 }
