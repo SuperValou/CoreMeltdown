@@ -7,13 +7,16 @@ namespace Assets.Scripts.HUDs
     public class GlobalTimer : MonoBehaviour
     {
         public float maxSeconds = 90;
-        public HeadUpDisplayManager headUpDisplayManager;
+        public TimerHUD timerHUD;
         
         private readonly Stopwatch _stopwatch = new Stopwatch();
         
+        public bool TimeIsUp { get; private set; }
+
         void Start()
         {
             _stopwatch.Start();
+            TimeIsUp = false;
         }
         
         void Update()
@@ -23,15 +26,10 @@ namespace Assets.Scripts.HUDs
             if (timeToDisplay <= 0)
             {
                 timeToDisplay = 0;
-                Invoke(nameof(LoadVictoryScreen), 2);
+                TimeIsUp = true;
             }
 
-            headUpDisplayManager.DisplayTime(timeToDisplay);
-        }
-
-        public void LoadVictoryScreen()
-        {
-            SceneManager.LoadScene(2, LoadSceneMode.Single);
+            timerHUD.DisplayTime(timeToDisplay);
         }
 
         public void Restart()

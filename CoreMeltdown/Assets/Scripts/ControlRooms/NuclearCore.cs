@@ -17,6 +17,8 @@ namespace Assets.Scripts.ControlRooms
 
         public float RadiationsPerSecond { get; private set; }
 
+        public bool IsStopped { get; private set; }
+
         void Start()
         {
             _stopwatch.Start();
@@ -24,8 +26,13 @@ namespace Assets.Scripts.ControlRooms
 
         void Update()
         {
+            if (IsStopped)
+            {
+                return;
+            }
+
             float failureProbability = Time.deltaTime * failureProbabilityPerSecond;
-            failureProbability = Mathf.Clamp(failureProbability, 0, 1);
+            failureProbability = Mathf.Clamp01(failureProbability);
 
             if (_random.NextDouble() < failureProbability)
             {
@@ -39,6 +46,18 @@ namespace Assets.Scripts.ControlRooms
         {
             var faultingPanelIndex = _random.Next(controlPanels.Length);
             controlPanels[faultingPanelIndex].TurnOn();
+        }
+
+        public void Stop()
+        {
+            foreach (var controlPanel in controlPanels)
+            {
+                controlPanel.TurnOff();
+            }
+
+            _stopwatch.Stop();
+            RadiationsPerSecond = 0;
+            IsStopped = true;
         }
 
         void OnDestroy()
