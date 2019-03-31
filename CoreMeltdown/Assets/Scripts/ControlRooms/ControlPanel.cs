@@ -9,12 +9,16 @@ namespace Assets.Scripts.ControlRooms
     {
         public float radioactiveAcceleration = 1;
         public float radioactiveIntensity = 1;
-        
+
+        public AudioClip alarm;
+        public AudioClip click;
+
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
-    
+        private AudioSource _audioSource;
+
         public bool IsTurnedOn { get; private set; }
         
         void Start()
@@ -30,6 +34,14 @@ namespace Assets.Scripts.ControlRooms
             {
                 throw new ArgumentException($"Missing {nameof(Animator)} on {this.gameObject.name} game object.");
             }
+
+            _audioSource = GetComponent<AudioSource>();
+            if (_audioSource == null)
+            {
+                throw new ArgumentException($"Missing {nameof(AudioSource)} on {this.gameObject.name} game object.");
+            }
+
+            _audioSource.clip = alarm;
         }
 
         public void TurnOn()
@@ -43,8 +55,8 @@ namespace Assets.Scripts.ControlRooms
             _animator.SetBool("Alarm", true);
 
             _stopwatch.Restart();
-
-            UnityEngine.Debug.Log("ALERT");
+            
+            _audioSource.Play();
         }
 
         public void TurnOff()
@@ -59,7 +71,8 @@ namespace Assets.Scripts.ControlRooms
 
             _stopwatch.Reset();
 
-            UnityEngine.Debug.Log("Pfew");
+            _audioSource.Stop();
+            _audioSource.PlayOneShot(click);
         }
 
         void OnTriggerEnter2D(Collider2D collider2D)
