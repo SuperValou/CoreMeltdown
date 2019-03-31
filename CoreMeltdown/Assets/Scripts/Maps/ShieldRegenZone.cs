@@ -10,15 +10,26 @@ namespace Assets.Scripts.Maps
 
         private readonly ICollection<Player> _playersToShield = new HashSet<Player>();
 
-        void OnTriggerEnter(Collider other)
+        void OnTriggerEnter2D(Collider2D collider2D)
         {
-            var player = other.gameObject.GetComponent<Player>();
-            if (player == null)
+            var playerController = collider2D.gameObject.GetComponent<TopDown2DPlayerController>();
+            if (playerController == null)
             {
                 return;
             }
 
-            _playersToShield.Add(player);
+            _playersToShield.Add(playerController.GetPlayer());
+        }
+
+        void OnTriggerExit2D(Collider2D collider2D)
+        {
+            var playerController = collider2D.gameObject.GetComponent<TopDown2DPlayerController>();
+            if (playerController == null)
+            {
+                return;
+            }
+
+            _playersToShield.Remove(playerController.GetPlayer());
         }
 
         void Update()

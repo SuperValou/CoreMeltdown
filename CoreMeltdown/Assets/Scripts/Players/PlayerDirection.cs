@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Players
 {
-    public enum PlayerMovement
+    public enum PlayerDirection
     {
         NotMoving = 0,
         MovingDown = 2,
