@@ -508,7 +508,9 @@ MonoBehaviour:
   healthLevel: {fileID: 1667725967}
   shieldLevel: {fileID: 1849096138}
   radiationLevel: {fileID: 2000345834}
-  danger: {r: 1, g: 0, b: 0, a: 0}
+  safe: {r: 1, g: 1, b: 1, a: 1}
+  warning: {r: 1, g: 0.5964968, b: 0.3254717, a: 1}
+  danger: {r: 0.9528302, g: 0.112362035, b: 0.112362035, a: 1}
 --- !u!4 &644858772
 Transform:
   m_ObjectHideFlags: 0
