@@ -10,6 +10,7 @@ namespace Assets.Scripts.HUDs
         public Text healthLevel;
         public Text shieldLevel;
         public Text radiationLevel;
+        public Text remainingTime;
 
         public Color safe;
         public Color warning;
@@ -67,6 +68,18 @@ namespace Assets.Scripts.HUDs
             else
             {
                 radiationLevel.color = safe;
+            }
+        }
+
+        public void DisplayTime(float timeToDisplay)
+        {
+            if (timeToDisplay < 10)
+            {
+                remainingTime.text = timeToDisplay.ToString("0.0") + "s";
+            }
+            else
+            {
+                remainingTime.text = timeToDisplay.ToString("00") + "s";
             }
         }
     }
